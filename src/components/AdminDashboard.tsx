@@ -142,70 +142,67 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
   };
 
   return (
-    <div className={`space-y-4 font-roboto ${lang === 'am' ? 'lang-am' : ''}`}>
+    <div className={`space-y-6 font-sans ${lang === 'am' ? 'lang-am' : ''}`}>
       {/* Module Header Bar */}
-      <div className="bg-white border border-[#E0E0E0] p-4 rounded mui-elevation-1 text-[#212121]">
-        <div className="flex items-center space-x-3">
-          <div className="p-2.5 bg-[#1976D2] rounded text-white shrink-0 shadow-xs">
+      <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm text-slate-900">
+        <div className="flex items-center space-x-3.5">
+          <div className="p-3 bg-slate-900 rounded-xl text-white shrink-0 shadow-xs">
             <Key className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-sm font-bold uppercase tracking-wider text-[#1976D2]">{t.adminTitle}</h2>
-            <p className="text-slate-600 text-xs mt-0.5">
-              {t.adminDesc}
-            </p>
+            <h2 className="text-base font-extrabold tracking-tight text-slate-900">{t.adminTitle}</h2>
           </div>
         </div>
       </div>
 
       {/* System Status Summary */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white border border-[#E0E0E0] p-4 rounded mui-elevation-1 flex items-center space-x-3.5 text-[#212121]">
-          <div className="p-2.5 bg-[#1976D2] text-white rounded shrink-0 shadow-2xs">
+        <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm flex items-center space-x-4 text-slate-900">
+          <div className="p-3 bg-slate-900 text-white rounded-xl shrink-0 shadow-2xs">
             <Key className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-[10px] uppercase font-mono font-bold text-slate-500">Security Signature Engine</p>
-            <p className="text-xs font-bold text-[#212121] mt-0.5 uppercase tracking-wider">Active & Ready</p>
+            <p className="text-[10px] uppercase font-mono font-bold text-slate-400">Security Signature Engine</p>
+            <p className="text-xs font-bold text-slate-900 mt-0.5 uppercase tracking-wider">Active & Ready</p>
           </div>
         </div>
 
-        <div className="bg-white border border-[#E0E0E0] p-4 rounded mui-elevation-1 flex items-center space-x-3.5 text-[#212121]">
-          <div className="p-2.5 bg-blue-50 text-[#1976D2] border border-blue-200 rounded shrink-0">
+        <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm flex items-center space-x-4 text-slate-900">
+          <div className="p-3 bg-slate-100 text-slate-900 border border-slate-200 rounded-xl shrink-0">
             <Layers className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-[10px] uppercase font-mono font-bold text-slate-500">{t.pendingQueue}</p>
-            <p className="text-sm font-extrabold text-[#212121] mt-0.5">{pendingVehicles.length}</p>
+            <p className="text-[10px] uppercase font-mono font-bold text-slate-400">{t.pendingQueue}</p>
+            <p className="text-sm font-extrabold text-slate-900 mt-0.5">{pendingVehicles.length}</p>
           </div>
         </div>
 
-        <div className="bg-white border border-[#E0E0E0] p-4 rounded mui-elevation-1 flex items-center space-x-3.5 text-[#212121]">
-          <div className="p-2.5 bg-[#E8F5E9] text-[#2E7D32] border border-[#A5D6A7] rounded shrink-0">
+        <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm flex items-center space-x-4 text-slate-900">
+          <div className="p-3 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-xl shrink-0">
             <FileCheck className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-[10px] uppercase font-mono font-bold text-slate-500">Permit Database</p>
-            <p className="text-xs font-bold text-[#212121] mt-0.5 uppercase tracking-wider">Connected & Synced</p>
+            <p className="text-[10px] uppercase font-mono font-bold text-slate-400">Permit Database</p>
+            <p className="text-xs font-bold text-slate-900 mt-0.5 uppercase tracking-wider">Connected & Synced</p>
           </div>
         </div>
       </div>
 
       {message && (
         <div
-          className={`p-4 rounded border flex items-start space-x-3 text-xs sm:text-sm mui-elevation-1 ${
+          className={`p-4 rounded-xl border flex items-start space-x-3 text-xs sm:text-sm shadow-sm ${
             message.type === 'success'
-              ? 'bg-[#E8F5E9] border-[#A5D6A7] text-[#1B5E20]'
-              : 'bg-[#FFEBEE] border-[#FFCDD2] text-[#B71C1C]'
+              ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
+              : 'bg-rose-50 border-rose-200 text-rose-900'
           }`}
         >
           {message.type === 'success' ? (
-            <CheckCircle2 className="w-5 h-5 text-[#2E7D32] shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
           ) : (
-            <ShieldAlert className="w-5 h-5 text-[#D32F2F] shrink-0 mt-0.5" />
+            <ShieldAlert className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
           )}
           <div>
-            <p className="font-bold uppercase tracking-wider">{message.type === 'success' ? 'Success' : 'Error'}</p>
+            <p className="font-bold">{message.type === 'success' ? 'Success' : 'Error'}</p>
             <p className="text-xs opacity-90 mt-0.5">{message.text}</p>
           </div>
         </div>
@@ -213,44 +210,44 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
 
       {/* QR Approval Modal / Preview callout */}
       {approvalResult && (
-        <div className="bg-white border-2 border-[#1976D2] rounded p-5 mui-elevation-2 text-[#212121] space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-[#E0E0E0]">
-            <span className="text-sm font-bold text-[#1976D2] uppercase tracking-wider flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-[#1976D2]" />
+        <div className="bg-white border-2 border-slate-900 rounded-2xl p-6 shadow-xl text-slate-900 space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+            <span className="text-sm font-extrabold text-slate-900 tracking-tight flex items-center space-x-2">
+              <Sparkles className="w-4 h-4 text-slate-800" />
               <span>{t.newlyApprovedQr}</span>
             </span>
             <button
               onClick={() => setApprovalResult(null)}
-              className="text-xs text-slate-500 hover:text-[#212121] font-bold uppercase tracking-wider cursor-pointer"
+              className="text-xs text-slate-400 hover:text-slate-900 font-semibold cursor-pointer"
             >
               {t.dismiss}
             </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-            <div className="md:col-span-4 bg-[#F5F5F5] p-4 rounded text-center border border-[#E0E0E0]">
+            <div className="md:col-span-4 bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
               <img
                 src={approvalResult.qr_code_base64}
                 alt="QR Sticker Code"
-                className="w-44 h-44 mx-auto"
+                className="w-44 h-44 mx-auto rounded-lg"
               />
               <p className="text-[10px] font-mono text-slate-700 mt-2 font-bold">{t.hmacSignedQr}</p>
             </div>
 
             <div className="md:col-span-8 space-y-3 font-mono text-xs">
-              <div className="bg-[#F5F5F5] p-3.5 rounded border border-[#E0E0E0] space-y-1">
-                <span className="text-[10px] text-slate-500 uppercase font-bold">{t.permitUuid}</span>
-                <p className="text-[#212121] font-bold truncate">{approvalResult.permit.permit_token_uuid}</p>
+              <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
+                <span className="text-[10px] text-slate-400 font-bold">{t.permitUuid}</span>
+                <p className="text-slate-900 font-bold truncate">{approvalResult.permit.permit_token_uuid}</p>
               </div>
 
-              <div className="bg-[#F5F5F5] p-3.5 rounded border border-[#E0E0E0] space-y-1">
-                <span className="text-[10px] text-slate-500 uppercase font-bold">{t.hmacSignatureHex}</span>
-                <p className="text-[#212121] font-bold break-all">{approvalResult.permit.hmac_signature}</p>
+              <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
+                <span className="text-[10px] text-slate-400 font-bold">{t.hmacSignatureHex}</span>
+                <p className="text-slate-900 font-bold break-all">{approvalResult.permit.hmac_signature}</p>
               </div>
 
-              <div className="bg-[#F5F5F5] p-3.5 rounded border border-[#E0E0E0] space-y-1">
-                <span className="text-[10px] text-slate-500 uppercase font-bold">{t.roadsideUrl}</span>
-                <p className="text-[#212121] font-bold truncate">{approvalResult.verification_url}</p>
+              <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
+                <span className="text-[10px] text-slate-400 font-bold">{t.roadsideUrl}</span>
+                <p className="text-slate-900 font-bold truncate">{approvalResult.verification_url}</p>
               </div>
             </div>
           </div>
@@ -258,41 +255,41 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
       )}
 
       {/* Main Approval & Batching Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Pending Approvals List */}
-        <div id="admin-pending-queue" className="lg:col-span-7 bg-white border border-[#E0E0E0] rounded p-5 mui-elevation-1 text-[#212121]">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 mb-4 border-b border-[#E0E0E0]">
-            <h3 className="text-sm font-bold text-[#1976D2] uppercase tracking-wider flex items-center space-x-2">
-              <QrCode className="w-4 h-4 text-[#1976D2]" />
+        <div id="admin-pending-queue" className="lg:col-span-7 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm text-slate-900">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 mb-4 border-b border-slate-200/80">
+            <h3 className="text-sm font-extrabold text-slate-900 tracking-tight flex items-center space-x-2">
+              <QrCode className="w-4 h-4 text-slate-700" />
               <span>{t.pendingQueue}</span>
-              <span className="text-[11px] font-mono bg-blue-50 border border-blue-200 text-[#1976D2] font-bold px-2.5 py-0.5 rounded-full">
+              <span className="text-[11px] font-mono bg-slate-100 border border-slate-200 text-slate-800 font-bold px-2.5 py-0.5 rounded-full">
                 {filteredPendingVehicles.length}
               </span>
             </h3>
 
             {/* Category Filter Pills */}
-            <div className="flex items-center space-x-1.5 bg-[#F5F5F5] p-1 rounded border border-[#E0E0E0]">
+            <div className="flex items-center space-x-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
               <button
                 onClick={() => setFilterType('all')}
-                className={`px-2.5 py-1 rounded text-[11px] font-medium uppercase tracking-wider transition cursor-pointer ${
-                  filterType === 'all' ? 'bg-[#1976D2] text-white shadow-2xs' : 'text-slate-600 hover:text-[#212121]'
+                className={`px-3 py-1 rounded-lg text-xs font-semibold transition cursor-pointer ${
+                  filterType === 'all' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 All ({pendingVehicles.length})
               </button>
               <button
                 onClick={() => setFilterType('ev')}
-                className={`px-2.5 py-1 rounded text-[11px] font-medium uppercase tracking-wider transition cursor-pointer ${
-                  filterType === 'ev' ? 'bg-[#1976D2] text-white shadow-2xs' : 'text-slate-600 hover:text-[#212121]'
+                className={`px-3 py-1 rounded-lg text-xs font-semibold transition cursor-pointer ${
+                  filterType === 'ev' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 ⚡ EV
               </button>
               <button
                 onClick={() => setFilterType('fuel')}
-                className={`px-2.5 py-1 rounded text-[11px] font-medium uppercase tracking-wider transition cursor-pointer ${
-                  filterType === 'fuel' ? 'bg-[#1976D2] text-white shadow-2xs' : 'text-slate-600 hover:text-[#212121]'
+                className={`px-3 py-1 rounded-lg text-xs font-semibold transition cursor-pointer ${
+                  filterType === 'fuel' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 ⛽ Fuel
@@ -307,14 +304,14 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
               placeholder="Search pending applications by VIN, Plate, or Owner..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white border border-[#E0E0E0] rounded px-3 py-2 text-xs text-[#212121] placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#1976D2] focus:ring-1 focus:ring-[#1976D2] transition shadow-2xs"
+              className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/15 transition-all shadow-2xs"
             />
           </div>
 
           {isLoading ? (
             <div className="py-12 text-center text-slate-400 text-xs">Loading queue...</div>
           ) : filteredPendingVehicles.length === 0 ? (
-            <div className="py-12 text-center text-slate-400 text-xs border border-dashed border-[#E0E0E0] rounded">
+            <div className="py-12 text-center text-slate-400 text-xs border border-dashed border-slate-200 rounded-xl">
               {searchTerm ? 'No matching pending registrations found.' : t.noPendingVehicles}
             </div>
           ) : (
@@ -322,19 +319,19 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
               {filteredPendingVehicles.map((vehicle) => (
                 <div
                   key={vehicle.vin}
-                  className="bg-[#F5F5F5] border border-[#E0E0E0] p-3.5 rounded flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#1976D2] transition shadow-2xs"
+                  className="bg-slate-50/80 border border-slate-200/80 p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-slate-400 transition shadow-2xs"
                 >
                   <div className="flex items-center space-x-3">
                     <img
                       src={vehicle.owner_photo_b2_url}
                       alt={vehicle.owner_name}
-                      className="w-10 h-10 rounded-full object-cover border border-[#E0E0E0] shrink-0 shadow-2xs"
+                      className="w-10 h-10 rounded-full object-cover border border-slate-200 shrink-0 shadow-2xs"
                     />
                     <div>
                       <div className="flex items-center space-x-2">
-                        <h4 className="text-xs font-bold text-[#212121]">{vehicle.license_plate}</h4>
-                        <span className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded-full font-bold ${
-                          vehicle.is_electric ? 'bg-[#E8F5E9] text-[#2E7D32]' : 'bg-slate-200 text-slate-700'
+                        <h4 className="text-xs font-bold text-slate-900">{vehicle.license_plate}</h4>
+                        <span className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded-md font-bold ${
+                          vehicle.is_electric ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'
                         }`}>
                           {vehicle.is_electric ? 'EV' : `${vehicle.engine_capacity_cc}cc`}
                         </span>
@@ -347,9 +344,9 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
                   <button
                     onClick={() => handleApprove(vehicle.vin)}
                     disabled={isProcessing === vehicle.vin}
-                    className="bg-[#1976D2] hover:bg-[#1565C0] text-white font-medium uppercase tracking-wider px-4 py-2 rounded text-xs shadow-xs transition shrink-0 flex items-center justify-center space-x-1.5 disabled:opacity-50 cursor-pointer active:scale-98"
+                    className="bg-[#181C24] hover:bg-[#0B0D12] text-white font-semibold tracking-tight px-4 py-2.5 rounded-xl text-xs shadow-xs transition shrink-0 flex items-center justify-center space-x-1.5 disabled:opacity-50 cursor-pointer border border-slate-900 active:scale-[0.98]"
                   >
-                    <Sparkles className="w-3.5 h-3.5" />
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                     <span>{isProcessing === vehicle.vin ? t.signing : t.approveSignPermit}</span>
                   </button>
                 </div>
@@ -359,25 +356,21 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
         </div>
 
         {/* Vendor Print Batching Module */}
-        <div id="admin-print-batch" className="lg:col-span-5 bg-white border border-[#E0E0E0] rounded p-5 mui-elevation-1 text-[#212121] space-y-4">
-          <h3 className="text-sm font-bold text-[#1976D2] uppercase tracking-wider pb-3 border-b border-[#E0E0E0] flex items-center space-x-2">
-            <Printer className="w-4 h-4 text-[#1976D2]" />
+        <div id="admin-print-batch" className="lg:col-span-5 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm text-slate-900 space-y-4">
+          <h3 className="text-sm font-extrabold text-slate-900 tracking-tight pb-3 border-b border-slate-200/80 flex items-center space-x-2">
+            <Printer className="w-4 h-4 text-slate-700" />
             <span>{t.automatedPrintQueue}</span>
           </h3>
 
-          <div className="bg-[#F5F5F5] p-4 rounded border border-[#E0E0E0] space-y-3.5">
-            <p className="text-xs text-slate-600 leading-relaxed">
-              {t.groupPrintJob}
-            </p>
-
+          <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-200/80 space-y-4">
             <div>
-              <label className="block text-[11px] font-bold text-slate-700 mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 {t.assignVendor}
               </label>
               <select
                 value={vendorUid}
                 onChange={(e) => setVendorUid(e.target.value)}
-                className="w-full bg-white border border-[#E0E0E0] rounded px-3 py-2 text-xs text-[#212121] font-medium focus:outline-none focus:border-[#1976D2] shadow-2xs"
+                className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:border-blue-500 shadow-2xs"
               >
                 <option value="vendor-01">SecurePrintVendor.Inc (PRT-881)</option>
                 <option value="vendor-02">NationalSecurityStickers.Ltd (PRT-902)</option>
@@ -387,7 +380,7 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
             <button
               onClick={handleCreatePrintBatch}
               disabled={isProcessing === 'batch'}
-              className="w-full bg-[#1976D2] hover:bg-[#1565C0] text-white font-medium uppercase tracking-wider py-2.5 px-3 rounded shadow-xs transition flex items-center justify-center space-x-2 text-xs disabled:opacity-50 cursor-pointer active:scale-98"
+              className="w-full bg-[#181C24] hover:bg-[#0B0D12] text-white font-bold tracking-tight py-2.5 px-3 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 text-xs disabled:opacity-50 cursor-pointer border border-slate-900 active:scale-[0.98]"
             >
               <Printer className="w-3.5 h-3.5" />
               <span>{isProcessing === 'batch' ? t.creatingBatch : t.generateBatch}</span>

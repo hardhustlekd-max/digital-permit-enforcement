@@ -108,11 +108,10 @@ export default function App() {
   }
 
   return (
-    <div className={`min-h-screen bg-[#F5F5F5] text-[#212121] font-roboto antialiased selection:bg-[#1976D2] selection:text-white flex flex-col pb-24 lg:pb-0 relative overflow-hidden ${lang === 'am' ? 'lang-am' : ''}`}>
-      {/* Background Soft Material Blobs */}
-      <div className="absolute -top-20 left-1/4 w-[500px] h-[500px] bg-[#1976D2]/8 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 -right-20 w-[500px] h-[500px] bg-[#9C27B0]/6 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-20 left-1/3 w-[500px] h-[500px] bg-[#0288D1]/8 rounded-full blur-3xl pointer-events-none" />
+    <div className={`min-h-screen bg-[#F8FAFC] text-slate-900 font-sans antialiased selection:bg-blue-100 selection:text-blue-900 flex flex-col pb-24 lg:pb-0 relative overflow-hidden ${lang === 'am' ? 'lang-am' : ''}`}>
+      {/* Background Soft Ambient Blobs */}
+      <div className="absolute -top-20 left-1/4 w-[500px] h-[500px] bg-slate-200/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 -right-20 w-[500px] h-[500px] bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header with System Controls Popover */}
       <Header
@@ -149,7 +148,7 @@ export default function App() {
       </main>
 
       {/* Bottom Navigation for Mobile / Tablet */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#E0E0E0] py-1 px-2 z-40 mui-elevation-8">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200/90 py-1.5 px-2 z-40 shadow-lg">
         <div className="flex items-center justify-around max-w-md mx-auto">
           {rolesList.map((item) => {
             const Icon = item.icon;
@@ -158,14 +157,14 @@ export default function App() {
               <button
                 key={item.id}
                 onClick={() => setActiveInterface(item.id)}
-                className={`flex-1 flex flex-col items-center justify-center py-1.5 px-1 min-h-[48px] rounded transition cursor-pointer ${
+                className={`flex-1 flex flex-col items-center justify-center py-1.5 px-1 min-h-[48px] rounded-xl transition cursor-pointer ${
                   isActive
-                    ? 'text-[#1976D2] font-bold'
-                    : 'text-slate-600 hover:text-[#1976D2]'
+                    ? 'text-slate-900 font-bold bg-slate-100'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-[#1976D2]' : 'text-slate-500'}`} />
-                <span className="text-[10px] uppercase tracking-wider text-center mt-0.5 truncate w-full px-0.5">
+                <Icon className={`w-5 h-5 ${isActive ? 'text-slate-900' : 'text-slate-400'}`} />
+                <span className="text-[10px] font-semibold tracking-tight text-center mt-0.5 truncate w-full px-0.5">
                   {item.badge}
                 </span>
               </button>
@@ -177,15 +176,15 @@ export default function App() {
       {/* Role Switcher Dialog / Bottom Sheet Modal */}
       {isRoleModalOpen && (
         <div className="fixed inset-0 bg-slate-950/40 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-4">
-          <div className="bg-white border border-[#E0E0E0] rounded max-w-sm w-full p-5 space-y-4 mui-elevation-8 animate-in fade-in slide-in-from-bottom-4 duration-200 text-[#212121] font-roboto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E0E0E0]">
-              <span className="text-xs font-bold text-[#1976D2] uppercase tracking-wider flex items-center space-x-1.5">
-                <UserCheck className="w-4 h-4 text-[#1976D2]" />
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-sm w-full p-6 space-y-4 shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-200 text-slate-900 font-sans">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+              <span className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center space-x-1.5">
+                <UserCheck className="w-4 h-4 text-slate-700" />
                 <span>{t.systemUserSelection}</span>
               </span>
               <button
                 onClick={() => setIsRoleModalOpen(false)}
-                className="text-slate-400 hover:text-[#212121] p-1 rounded cursor-pointer transition"
+                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg cursor-pointer transition"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -199,15 +198,15 @@ export default function App() {
                     setActiveInterface(item.id);
                     setIsRoleModalOpen(false);
                   }}
-                  className={`w-full text-left px-3.5 py-2.5 rounded text-xs font-medium uppercase tracking-wider transition cursor-pointer flex items-center justify-between ${
+                  className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold tracking-tight transition cursor-pointer flex items-center justify-between ${
                     activeInterface === item.id
-                      ? 'bg-[#1976D2] text-white shadow-xs'
-                      : 'bg-[#F5F5F5] text-slate-800 hover:bg-slate-200 border border-[#E0E0E0]'
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/80'
                   }`}
                 >
                   <span className="truncate pr-2">{item.label}</span>
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono ${
-                    activeInterface === item.id ? 'bg-[#0D47A1] text-white' : 'bg-slate-200 text-slate-700'
+                  <span className={`text-[10px] px-2 py-0.5 rounded-md font-mono ${
+                    activeInterface === item.id ? 'bg-slate-800 text-white' : 'bg-slate-200 text-slate-700'
                   }`}>
                     {item.badge}
                   </span>
@@ -215,13 +214,13 @@ export default function App() {
               ))}
             </div>
 
-            <div className="pt-2 border-t border-[#E0E0E0]">
+            <div className="pt-2 border-t border-slate-200">
               <button
                 onClick={() => {
                   setIsRoleModalOpen(false);
                   handleLogout();
                 }}
-                className="w-full bg-[#1976D2] hover:bg-[#1565C0] text-white font-medium uppercase tracking-wider text-xs py-2.5 rounded transition cursor-pointer flex items-center justify-center space-x-2 shadow-xs"
+                className="w-full bg-[#181C24] hover:bg-[#0B0D12] text-white font-semibold text-xs py-2.5 rounded-xl transition cursor-pointer flex items-center justify-center space-x-2 shadow-sm border border-slate-900"
               >
                 <LogOut className="w-4 h-4" />
                 <span>{t.logoutDesc}</span>
@@ -232,9 +231,8 @@ export default function App() {
       )}
 
       {/* Footer */}
-      <footer className="bg-white/80 border-t border-[#E0E0E0] py-6 text-center text-xs text-slate-500 font-roboto mt-12 relative z-10">
-        <p className="font-medium text-[#212121] uppercase tracking-wider">{t.footerTitle}</p>
-        <p className="mt-1 text-[11px] text-slate-500 font-mono">{t.footerSub}</p>
+      <footer className="bg-white/80 border-t border-slate-200/80 py-6 text-center text-xs text-slate-500 font-sans mt-12 relative z-10">
+        <p className="font-semibold text-slate-700 uppercase tracking-wider text-[11px]">{t.footerTitle}</p>
       </footer>
     </div>
   );

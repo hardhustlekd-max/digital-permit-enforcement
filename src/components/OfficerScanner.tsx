@@ -184,36 +184,36 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
   };
 
   // Chroma Background Color based on scan result
-  let chromaClass = 'bg-white border-[#E0E0E0] text-[#212121] mui-elevation-1';
+  let chromaClass = 'bg-white border-slate-200/90 text-slate-900 shadow-sm';
   if (scanResult) {
     if (scanResult.color === 'GREEN') {
-      chromaClass = 'bg-[#2E7D32] text-white mui-elevation-4 transition-colors duration-300';
+      chromaClass = 'bg-emerald-700 text-white shadow-xl transition-colors duration-300 border-emerald-800';
     } else if (scanResult.color === 'YELLOW') {
-      chromaClass = 'bg-[#ED6C02] text-white mui-elevation-4 transition-colors duration-300';
+      chromaClass = 'bg-amber-600 text-white shadow-xl transition-colors duration-300 border-amber-700';
     } else if (scanResult.color === 'RED') {
-      chromaClass = 'bg-[#D32F2F] text-white mui-elevation-4 transition-colors duration-300';
+      chromaClass = 'bg-rose-700 text-white shadow-xl transition-colors duration-300 border-rose-800';
     }
   }
 
   return (
-    <div className={`min-h-[500px] p-4 sm:p-6 rounded border transition-all duration-500 relative overflow-hidden font-roboto ${lang === 'am' ? 'lang-am' : ''} ${chromaClass}`}>
+    <div className={`min-h-[500px] p-5 sm:p-7 rounded-2xl border transition-all duration-500 relative overflow-hidden font-sans ${lang === 'am' ? 'lang-am' : ''} ${chromaClass}`}>
       
       {/* Antispoofing Running Millisecond Clock Header */}
-      <div className="flex items-center justify-between border-b border-current/20 pb-3 mb-4">
+      <div className="flex items-center justify-between border-b border-current/20 pb-3.5 mb-5">
         <div className="flex items-center space-x-2">
           <Shield className="w-4 h-4 animate-pulse shrink-0" />
-          <span className="font-bold tracking-wider text-xs uppercase">{t.officerTitle}</span>
+          <span className="font-extrabold tracking-tight text-xs uppercase">{t.officerTitle}</span>
         </div>
 
         {/* Dynamic Millisecond Timestamp Banner */}
-        <div className="bg-black/10 px-3 py-1 rounded border border-current/20 font-mono text-[11px] font-bold tracking-wider">
+        <div className="bg-black/10 px-3 py-1 rounded-lg border border-current/20 font-mono text-[11px] font-bold tracking-wider">
           ⏱️ {timeMs || 'SYNCING...'}
         </div>
       </div>
 
       {/* Geolocation Tag */}
-      <div className="flex items-center justify-between mb-4 text-[11px] font-mono opacity-90 font-medium">
-        <span className="flex items-center space-x-1">
+      <div className="flex items-center justify-between mb-5 text-[11px] font-mono opacity-90 font-semibold">
+        <span className="flex items-center space-x-1.5">
           <MapPin className="w-3.5 h-3.5 shrink-0" />
           <span>GPS: {geoCoords ? `${geoCoords.lat.toFixed(4)}, ${geoCoords.lng.toFixed(4)}` : t.gpsLocating}</span>
         </span>
@@ -242,7 +242,7 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
 
           {/* Vehicle Profile & Driver Photo Cross-Verification */}
           {scanResult.vehicleData && (
-            <div className="bg-white border border-[#E0E0E0] rounded p-5 mui-elevation-2 space-y-4 text-[#212121]">
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xl space-y-4 text-slate-900">
               <div className="flex items-center space-x-4">
                 
                 {/* Backblaze B2 Driver Photo Avatar */}
@@ -250,29 +250,29 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
                   <img
                     src={scanResult.vehicleData.owner_photo_b2_url}
                     alt={scanResult.vehicleData.owner_name}
-                    className="w-20 h-20 rounded-full object-cover border-2 border-[#1976D2] shadow-xs"
+                    className="w-20 h-20 rounded-full object-cover border-2 border-slate-900 shadow-xs"
                   />
-                  <span className="absolute bottom-0 right-0 bg-[#1976D2] text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full text-white border border-white">
+                  <span className="absolute bottom-0 right-0 bg-slate-900 text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full text-white border border-white">
                     B2 PHOTO
                   </span>
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">OPERATOR IDENTITY</span>
-                  <h3 className="text-base font-bold text-[#212121]">{scanResult.vehicleData.owner_name}</h3>
-                  <p className="text-xs font-mono font-bold text-slate-700">Plate: <strong className="text-[#1976D2] uppercase">{scanResult.vehicleData.license_plate}</strong></p>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">OPERATOR IDENTITY</span>
+                  <h3 className="text-base font-bold text-slate-900">{scanResult.vehicleData.owner_name}</h3>
+                  <p className="text-xs font-mono font-bold text-slate-700">Plate: <strong className="text-slate-900 uppercase">{scanResult.vehicleData.license_plate}</strong></p>
                   <p className="text-[11px] font-mono text-slate-500">VIN: {scanResult.vehicleData.vin}</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#E0E0E0] font-mono text-xs">
+              <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-200 font-mono text-xs">
                 <div>
-                  <span className="text-[10px] uppercase text-slate-500 font-bold">Engine Specification</span>
-                  <p className="font-bold text-[#212121]">{scanResult.vehicleData.is_electric ? 'Pure EV (0cc)' : `${scanResult.vehicleData.engine_capacity_cc} CC`}</p>
+                  <span className="text-[10px] uppercase text-slate-400 font-bold">Engine Specification</span>
+                  <p className="font-bold text-slate-900">{scanResult.vehicleData.is_electric ? 'Pure EV (0cc)' : `${scanResult.vehicleData.engine_capacity_cc} CC`}</p>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase text-slate-500 font-bold">Permit Expiry Date</span>
-                  <p className="font-bold text-[#212121]">{new Date(scanResult.vehicleData.expiry_date).toLocaleDateString()}</p>
+                  <span className="text-[10px] uppercase text-slate-400 font-bold">Permit Expiry Date</span>
+                  <p className="font-bold text-slate-900">{new Date(scanResult.vehicleData.expiry_date).toLocaleDateString()}</p>
                 </div>
               </div>
             </div>
@@ -282,9 +282,9 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
           <div className="text-center pt-2">
             <button
               onClick={() => setScanResult(null)}
-              className="bg-white text-[#212121] hover:bg-slate-100 font-medium uppercase tracking-wider px-6 py-2.5 rounded shadow-2xs transition flex items-center space-x-2 mx-auto text-sm cursor-pointer active:scale-98 border border-[#E0E0E0]"
+              className="bg-white text-slate-900 hover:bg-slate-100 font-bold tracking-tight px-6 py-3 rounded-xl shadow-md transition flex items-center space-x-2 mx-auto text-sm cursor-pointer border border-slate-200 active:scale-[0.98]"
             >
-              <RefreshCw className="w-4 h-4 text-[#1976D2]" />
+              <RefreshCw className="w-4 h-4 text-slate-800" />
               <span>Scan Next Vehicle QR Sticker</span>
             </button>
           </div>
@@ -295,18 +295,18 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
         <div className="max-w-xl mx-auto space-y-4 py-2">
           
           {/* Camera Scanner Container */}
-          <div id="officer-camera" className="bg-[#F5F5F5] border border-[#E0E0E0] rounded p-5 text-center space-y-3 shadow-2xs">
-            <h3 className="text-base font-bold text-[#1976D2] uppercase tracking-wider flex items-center justify-center space-x-2">
-              <Camera className="w-5 h-5 text-[#1976D2]" />
+          <div id="officer-camera" className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-6 text-center space-y-3 shadow-2xs">
+            <h3 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center justify-center space-x-2">
+              <Camera className="w-5 h-5 text-slate-800" />
               <span>{t.cameraScanner}</span>
             </h3>
 
             {scannerActive ? (
               <div className="space-y-3">
-                <div id="qr-reader-container" className="overflow-hidden rounded bg-black border border-[#E0E0E0] max-w-sm mx-auto shadow-xs" />
+                <div id="qr-reader-container" className="overflow-hidden rounded-xl bg-black border border-slate-200 max-w-sm mx-auto shadow-xs" />
                 <button
                   onClick={() => setScannerActive(false)}
-                  className="text-xs text-[#D32F2F] font-bold uppercase tracking-wider hover:underline cursor-pointer"
+                  className="text-xs text-rose-600 font-bold hover:underline cursor-pointer"
                 >
                   {t.stopCamera}
                 </button>
@@ -314,7 +314,7 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
             ) : (
               <button
                 onClick={() => setScannerActive(true)}
-                className="bg-[#1976D2] hover:bg-[#1565C0] text-white font-medium uppercase tracking-wider py-2.5 px-6 rounded shadow-xs transition flex items-center justify-center space-x-2 mx-auto text-sm cursor-pointer active:scale-98"
+                className="bg-[#181C24] hover:bg-[#0B0D12] text-white font-bold tracking-tight py-2.5 px-6 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 mx-auto text-xs sm:text-sm cursor-pointer border border-slate-900 active:scale-[0.98]"
               >
                 <Camera className="w-4 h-4" />
                 <span>{t.activateCamera}</span>
@@ -323,8 +323,8 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
           </div>
 
           {/* Manual Token Lookup Input */}
-          <div id="officer-manual" className="bg-[#F5F5F5] border border-[#E0E0E0] rounded p-5 space-y-2.5 shadow-2xs">
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+          <div id="officer-manual" className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-6 space-y-2.5 shadow-2xs">
+            <label className="block text-xs font-semibold text-slate-700">
               {t.enterUuidManually}
             </label>
             <div className="flex space-x-2">
@@ -333,12 +333,12 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
                 placeholder="Paste Permit UUID or scanned verification URL"
                 value={manualInput}
                 onChange={(e) => setManualInput(e.target.value)}
-                className="flex-1 bg-white border border-[#E0E0E0] rounded px-3 py-2 text-xs text-[#212121] placeholder-slate-400 font-mono focus:outline-none focus:border-[#1976D2] shadow-2xs"
+                className="flex-1 bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 placeholder-slate-400 font-mono focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/15 transition-all shadow-2xs"
               />
               <button
                 onClick={() => processScannedUrl(manualInput)}
                 disabled={!manualInput || isVerifying}
-                className="bg-[#1976D2] hover:bg-[#1565C0] text-white text-xs font-medium uppercase tracking-wider px-4 py-2 rounded shadow-xs transition disabled:opacity-50 cursor-pointer active:scale-98"
+                className="bg-[#181C24] hover:bg-[#0B0D12] text-white text-xs font-bold tracking-tight px-4 py-2.5 rounded-xl shadow-sm transition disabled:opacity-50 cursor-pointer border border-slate-900 active:scale-[0.98]"
               >
                 {isVerifying ? t.checking : t.checkVerify}
               </button>
@@ -346,33 +346,33 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
           </div>
 
           {/* Simulation Triggers for Instant Field Testing */}
-          <div id="officer-field-test" className="bg-[#F5F5F5] border border-[#E0E0E0] rounded p-5 space-y-3 shadow-2xs">
-            <span className="text-xs font-mono font-bold text-slate-600 uppercase tracking-wider block text-center">
+          <div id="officer-field-test" className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-6 space-y-3 shadow-2xs">
+            <span className="text-xs font-bold text-slate-700 block text-center">
               {t.quickFieldSim}
             </span>
 
-            <div className="grid grid-cols-3 gap-2.5">
+            <div className="grid grid-cols-3 gap-3">
               <button
                 onClick={() => triggerSimulatedScan('valid')}
-                className="bg-white hover:bg-[#E8F5E9] border border-[#A5D6A7] text-[#1B5E20] py-2.5 px-2 rounded text-xs font-medium uppercase tracking-wider transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-98"
+                className="bg-white hover:bg-emerald-50 border border-emerald-200 text-emerald-900 py-3 px-2 rounded-xl text-xs font-bold transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-[0.98]"
               >
-                <CheckCircle className="w-4 h-4 text-[#2E7D32]" />
+                <CheckCircle className="w-4 h-4 text-emerald-600" />
                 <span>Valid (Clear)</span>
               </button>
 
               <button
                 onClick={() => triggerSimulatedScan('expired')}
-                className="bg-white hover:bg-[#FFF3E0] border border-[#FFE0B2] text-[#E65100] py-2.5 px-2 rounded text-xs font-medium uppercase tracking-wider transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-98"
+                className="bg-white hover:bg-amber-50 border border-amber-200 text-amber-900 py-3 px-2 rounded-xl text-xs font-bold transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-[0.98]"
               >
-                <AlertTriangle className="w-4 h-4 text-[#ED6C02]" />
+                <AlertTriangle className="w-4 h-4 text-amber-600" />
                 <span>Expired</span>
               </button>
 
               <button
                 onClick={() => triggerSimulatedScan('fraud')}
-                className="bg-white hover:bg-[#FFEBEE] border border-[#FFCDD2] text-[#B71C1C] py-2.5 px-2 rounded text-xs font-medium uppercase tracking-wider transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-98"
+                className="bg-white hover:bg-rose-50 border border-rose-200 text-rose-900 py-3 px-2 rounded-xl text-xs font-bold transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-[0.98]"
               >
-                <ShieldAlert className="w-4 h-4 text-[#D32F2F]" />
+                <ShieldAlert className="w-4 h-4 text-rose-600" />
                 <span>Fraud Alert</span>
               </button>
             </div>
