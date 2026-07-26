@@ -144,7 +144,7 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
 
   return (
     <div className={`space-y-6 font-sans ${lang === 'am' ? 'lang-am' : ''}`}>
-      {/* Module Header Bar with MUI Tabs */}
+      {/* Module Header Bar with Classic Tabs */}
       <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm text-slate-900 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center space-x-3.5">
@@ -155,16 +155,18 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
               <h2 className="text-base font-extrabold tracking-tight text-slate-900">{t.adminTitle}</h2>
             </div>
           </div>
+        </div>
 
-          {/* MUI Style Tab Navigation Bar */}
-          <div className="flex items-center space-x-1 bg-slate-100/90 p-1 rounded-xl border border-slate-200/80 overflow-x-auto no-scrollbar">
+        {/* Classic Style Tab Selector */}
+        <div className="border-b border-slate-200">
+          <div className="flex items-center space-x-6 overflow-x-auto no-scrollbar">
             <button
               type="button"
               onClick={() => setActiveTab('all')}
-              className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center space-x-1.5 ${
+              className={`pb-2.5 px-1 text-xs transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 border-b-2 -mb-px ${
                 activeTab === 'all'
-                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
+                  ? 'border-slate-900 text-slate-900 font-extrabold'
+                  : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300 font-semibold'
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
@@ -173,10 +175,10 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
             <button
               type="button"
               onClick={() => setActiveTab('approvals')}
-              className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center space-x-1.5 ${
+              className={`pb-2.5 px-1 text-xs transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 border-b-2 -mb-px ${
                 activeTab === 'approvals'
-                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
+                  ? 'border-slate-900 text-slate-900 font-extrabold'
+                  : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300 font-semibold'
               }`}
             >
               <QrCode className="w-3.5 h-3.5" />
@@ -185,10 +187,10 @@ export default function AdminDashboard({ currentRole, onPermitsUpdated, lang = '
             <button
               type="button"
               onClick={() => setActiveTab('batch')}
-              className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center space-x-1.5 ${
+              className={`pb-2.5 px-1 text-xs transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 border-b-2 -mb-px ${
                 activeTab === 'batch'
-                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
+                  ? 'border-slate-900 text-slate-900 font-extrabold'
+                  : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300 font-semibold'
               }`}
             >
               <Printer className="w-3.5 h-3.5" />

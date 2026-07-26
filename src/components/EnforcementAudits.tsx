@@ -41,9 +41,9 @@ export default function EnforcementAudits({ currentRole, lang = 'en' }: Enforcem
 
   return (
     <div className={`space-y-6 font-sans ${lang === 'am' ? 'lang-am' : ''}`}>
-      {/* Module Header Bar with MUI Tabs */}
+      {/* Module Header Bar with Classic Tabs */}
       <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm text-slate-900 space-y-4">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center space-x-3.5">
             <div className="p-3 bg-slate-900 rounded-xl text-white shrink-0 shadow-xs">
               <ShieldCheck className="w-5 h-5" />
@@ -53,61 +53,61 @@ export default function EnforcementAudits({ currentRole, lang = 'en' }: Enforcem
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            {/* MUI Style Tab Navigation Bar */}
-            <div className="flex items-center space-x-1 bg-slate-100/90 p-1 rounded-xl border border-slate-200/80 overflow-x-auto no-scrollbar">
-              <button
-                type="button"
-                onClick={() => setFilterTab('all')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1 ${
-                  filterTab === 'all'
-                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
-                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
-                }`}
-              >
-                <span>{t.viewAll || 'All Logs'} ({audits.length})</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setFilterTab('compliant')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1 ${
-                  filterTab === 'compliant'
-                    ? 'bg-emerald-600 text-white shadow-xs font-extrabold'
-                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
-                }`}
-              >
-                <span>Compliant ({audits.filter(a => a.audit_result === 'valid_green').length})</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setFilterTab('expired')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1 ${
-                  filterTab === 'expired'
-                    ? 'bg-amber-600 text-white shadow-xs font-extrabold'
-                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
-                }`}
-              >
-                <span>Expired ({audits.filter(a => a.audit_result === 'expired_amber').length})</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setFilterTab('fraud')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1 ${
-                  filterTab === 'fraud'
-                    ? 'bg-rose-600 text-white shadow-xs font-extrabold'
-                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
-                }`}
-              >
-                <span>Fraud ({audits.filter(a => a.audit_result === 'fraud_red').length})</span>
-              </button>
-            </div>
+          <button
+            onClick={fetchAudits}
+            className="bg-white hover:bg-slate-50 text-slate-900 px-3.5 py-1.5 rounded-xl text-xs font-semibold tracking-tight border border-slate-300 shadow-2xs transition flex items-center space-x-1.5 cursor-pointer self-start sm:self-auto active:scale-[0.98]"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 text-slate-700 ${isLoading ? 'animate-spin' : ''}`} />
+            <span>{t.refreshFeed}</span>
+          </button>
+        </div>
 
+        {/* Classic Style Tab Selector */}
+        <div className="border-b border-slate-200">
+          <div className="flex items-center space-x-6 overflow-x-auto no-scrollbar">
             <button
-              onClick={fetchAudits}
-              className="bg-white hover:bg-slate-50 text-slate-900 px-3.5 py-1.5 rounded-xl text-xs font-semibold tracking-tight border border-slate-300 shadow-2xs transition flex items-center space-x-1.5 cursor-pointer active:scale-[0.98]"
+              type="button"
+              onClick={() => setFilterTab('all')}
+              className={`pb-2.5 px-1 text-xs transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1 border-b-2 -mb-px ${
+                filterTab === 'all'
+                  ? 'border-slate-900 text-slate-900 font-extrabold'
+                  : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300 font-semibold'
+              }`}
             >
-              <RefreshCw className={`w-3.5 h-3.5 text-slate-700 ${isLoading ? 'animate-spin' : ''}`} />
-              <span>{t.refreshFeed}</span>
+              <span>{t.viewAll || 'All Logs'} ({audits.length})</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setFilterTab('compliant')}
+              className={`pb-2.5 px-1 text-xs transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1 border-b-2 -mb-px ${
+                filterTab === 'compliant'
+                  ? 'border-emerald-600 text-emerald-700 font-extrabold'
+                  : 'border-transparent text-slate-500 hover:text-emerald-700 hover:border-emerald-300 font-semibold'
+              }`}
+            >
+              <span>Compliant ({audits.filter(a => a.audit_result === 'valid_green').length})</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setFilterTab('expired')}
+              className={`pb-2.5 px-1 text-xs transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1 border-b-2 -mb-px ${
+                filterTab === 'expired'
+                  ? 'border-amber-600 text-amber-700 font-extrabold'
+                  : 'border-transparent text-slate-500 hover:text-amber-700 hover:border-amber-300 font-semibold'
+              }`}
+            >
+              <span>Expired ({audits.filter(a => a.audit_result === 'expired_amber').length})</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setFilterTab('fraud')}
+              className={`pb-2.5 px-1 text-xs transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1 border-b-2 -mb-px ${
+                filterTab === 'fraud'
+                  ? 'border-rose-600 text-rose-700 font-extrabold'
+                  : 'border-transparent text-slate-500 hover:text-rose-700 hover:border-rose-300 font-semibold'
+              }`}
+            >
+              <span>Fraud ({audits.filter(a => a.audit_result === 'fraud_red').length})</span>
             </button>
           </div>
         </div>

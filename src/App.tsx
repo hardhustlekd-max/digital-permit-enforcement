@@ -147,32 +147,6 @@ export default function App() {
         )}
       </main>
 
-      {/* Bottom Navigation for Mobile / Tablet */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200/90 py-1.5 px-2 z-40 shadow-lg">
-        <div className="flex items-center justify-around max-w-md mx-auto">
-          {rolesList.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeInterface === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => setActiveInterface(item.id)}
-                className={`flex-1 flex flex-col items-center justify-center py-1.5 px-1 min-h-[48px] rounded-xl transition cursor-pointer ${
-                  isActive
-                    ? 'text-slate-900 font-bold bg-slate-100'
-                    : 'text-slate-500 hover:text-slate-900'
-                }`}
-              >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-slate-900' : 'text-slate-400'}`} />
-                <span className="text-[10px] font-semibold tracking-tight text-center mt-0.5 truncate w-full px-0.5">
-                  {item.badge}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
       {/* Role Switcher Dialog / Bottom Sheet Modal */}
       {isRoleModalOpen && (
         <div className="fixed inset-0 bg-slate-950/40 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-4">

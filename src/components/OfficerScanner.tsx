@@ -221,17 +221,17 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
         <span className="font-bold uppercase tracking-wider">{t.badgeId}</span>
       </div>
 
-      {/* MUI Style Tab Navigation Bar */}
+      {/* Classic Style Tab Navigation Bar */}
       {!scanResult && (
-        <div className="mb-6 flex items-center justify-center">
-          <div className="inline-flex items-center space-x-1 bg-black/10 p-1 rounded-xl border border-current/20 overflow-x-auto max-w-full no-scrollbar">
+        <div className="mb-6 flex items-center justify-center border-b border-current/20">
+          <div className="inline-flex items-center space-x-4 sm:space-x-6 overflow-x-auto max-w-full no-scrollbar">
             <button
               type="button"
               onClick={() => setActiveTab('camera')}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 ${
+              className={`pb-2.5 px-1 text-xs transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 border-b-2 -mb-px ${
                 activeTab === 'camera'
-                  ? 'bg-white text-slate-900 shadow-xs font-extrabold'
-                  : 'text-current opacity-80 hover:opacity-100 hover:bg-black/10'
+                  ? 'border-current font-extrabold opacity-100'
+                  : 'border-transparent opacity-70 hover:opacity-100 font-semibold'
               }`}
             >
               <Camera className="w-3.5 h-3.5" />
@@ -240,10 +240,10 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
             <button
               type="button"
               onClick={() => setActiveTab('manual')}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 ${
+              className={`pb-2.5 px-1 text-xs transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 border-b-2 -mb-px ${
                 activeTab === 'manual'
-                  ? 'bg-white text-slate-900 shadow-xs font-extrabold'
-                  : 'text-current opacity-80 hover:opacity-100 hover:bg-black/10'
+                  ? 'border-current font-extrabold opacity-100'
+                  : 'border-transparent opacity-70 hover:opacity-100 font-semibold'
               }`}
             >
               <Shield className="w-3.5 h-3.5" />
@@ -252,10 +252,10 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
             <button
               type="button"
               onClick={() => setActiveTab('sim')}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 ${
+              className={`pb-2.5 px-1 text-xs transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 border-b-2 -mb-px ${
                 activeTab === 'sim'
-                  ? 'bg-white text-slate-900 shadow-xs font-extrabold'
-                  : 'text-current opacity-80 hover:opacity-100 hover:bg-black/10'
+                  ? 'border-current font-extrabold opacity-100'
+                  : 'border-transparent opacity-70 hover:opacity-100 font-semibold'
               }`}
             >
               <AlertTriangle className="w-3.5 h-3.5" />
@@ -264,10 +264,10 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
             <button
               type="button"
               onClick={() => setActiveTab('all')}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 ${
+              className={`pb-2.5 px-1 text-xs transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 border-b-2 -mb-px ${
                 activeTab === 'all'
-                  ? 'bg-white text-slate-900 shadow-xs font-extrabold'
-                  : 'text-current opacity-80 hover:opacity-100 hover:bg-black/10'
+                  ? 'border-current font-extrabold opacity-100'
+                  : 'border-transparent opacity-70 hover:opacity-100 font-semibold'
               }`}
             >
               <span>{t.viewAll || 'All Modes'}</span>

@@ -159,9 +159,9 @@ export default function LoginPage({ onLogin, lang, onLangChange, initialRole = '
       <main className="max-w-[420px] w-full mx-auto my-auto px-4 py-8">
         <div className="bg-white border border-slate-200/90 rounded-2xl shadow-xl shadow-slate-200/60 p-7 sm:p-9 transition-all">
           
-          {/* MUI-Style Tab Navigation for Roles */}
-          <div className="mb-6">
-            <div className="flex items-center space-x-1 bg-slate-100/90 p-1 rounded-xl border border-slate-200/80 overflow-x-auto no-scrollbar">
+          {/* Classic Tab Navigation for Roles */}
+          <div className="mb-6 border-b border-slate-200">
+            <div className="flex items-center space-x-1 overflow-x-auto no-scrollbar">
               {roles.map((r) => {
                 const Icon = r.icon;
                 const isSelected = selectedRole === r.id;
@@ -170,10 +170,10 @@ export default function LoginPage({ onLogin, lang, onLangChange, initialRole = '
                     key={r.id}
                     type="button"
                     onClick={() => handleRoleSelect(r.id)}
-                    className={`flex-1 min-w-[70px] sm:min-w-[80px] flex items-center justify-center space-x-1.5 py-2 px-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                    className={`flex-1 min-w-[65px] flex items-center justify-center space-x-1 py-2.5 px-2 text-xs transition-all cursor-pointer whitespace-nowrap border-b-2 -mb-px ${
                       isSelected
-                        ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
-                        : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
+                        ? 'border-slate-900 text-slate-900 font-extrabold'
+                        : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
                     }`}
                   >
                     <Icon className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-slate-900' : 'text-slate-400'}`} />

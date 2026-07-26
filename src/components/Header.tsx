@@ -108,8 +108,8 @@ export default function Header({ activeInterface, onInterfaceChange, onSeedData,
             </div>
           </div>
 
-          {/* Header Role Navigation Tabs for Desktop - MUI Styled */}
-          <nav className="hidden lg:flex items-center space-x-1 bg-slate-900/80 p-1 rounded-xl border border-slate-800">
+          {/* Header Role Navigation Tabs for Desktop - Classic Tab Style */}
+          <nav className="hidden lg:flex items-center space-x-6">
             {interfaces.map((item) => {
               const Icon = item.icon;
               const isActive = activeInterface === item.id;
@@ -117,13 +117,13 @@ export default function Header({ activeInterface, onInterfaceChange, onSeedData,
                 <button
                   key={item.id}
                   onClick={() => onInterfaceChange(item.id)}
-                  className={`px-3 py-1.5 text-xs font-semibold tracking-tight rounded-lg transition-all cursor-pointer flex items-center space-x-2 ${
+                  className={`py-3 px-1 text-xs font-semibold tracking-tight transition-all cursor-pointer flex items-center space-x-2 border-b-2 -mb-px ${
                     isActive
-                      ? 'bg-white text-slate-900 shadow-sm font-extrabold border border-slate-200/80'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                      ? 'border-white text-white font-extrabold'
+                      : 'border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-600'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-slate-900' : 'text-slate-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
                   <span>{item.label}</span>
                 </button>
               );
@@ -287,9 +287,9 @@ export default function Header({ activeInterface, onInterfaceChange, onSeedData,
           </div>
         </div>
 
-        {/* Mobile Horizontal MUI Scrollable Navigation Tab Bar */}
-        <div className="lg:hidden border-t border-slate-800/80 py-2 overflow-x-auto no-scrollbar">
-          <div className="flex items-center space-x-1 min-w-max px-0.5">
+        {/* Mobile Horizontal Scrollable Navigation Tab Bar - Classic Tab Style */}
+        <div className="lg:hidden border-t border-slate-800/80 overflow-x-auto no-scrollbar">
+          <div className="flex items-center space-x-4 min-w-max px-3">
             {interfaces.map((item) => {
               const Icon = item.icon;
               const isActive = activeInterface === item.id;
@@ -297,13 +297,13 @@ export default function Header({ activeInterface, onInterfaceChange, onSeedData,
                 <button
                   key={item.id}
                   onClick={() => onInterfaceChange(item.id)}
-                  className={`px-3 py-1.5 text-xs font-semibold tracking-tight rounded-lg transition-all cursor-pointer flex items-center space-x-1.5 whitespace-nowrap ${
+                  className={`py-2.5 px-1 text-xs font-semibold tracking-tight transition-all cursor-pointer flex items-center space-x-1.5 whitespace-nowrap border-b-2 -mb-px ${
                     isActive
-                      ? 'bg-white text-slate-900 shadow-sm font-extrabold'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                      ? 'border-white text-white font-extrabold'
+                      : 'border-transparent text-slate-400 hover:text-slate-200'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-slate-900' : 'text-slate-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
                   <span>{item.label}</span>
                 </button>
               );
