@@ -1,0 +1,6 @@
+{
+  "name": "Digital QR Permit & Enforcement Infrastructure",
+  "description": "Production-ready digital permit registration, B2 object storage, print vendor batching, and mobile roadside QR enforcement scanner.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
