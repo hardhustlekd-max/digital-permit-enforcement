@@ -159,52 +159,58 @@ export default function LoginPage({ onLogin, lang, onLangChange, initialRole = '
       <main className="max-w-[420px] w-full mx-auto my-auto px-4 py-8">
         <div className="bg-white border border-slate-200/90 rounded-2xl shadow-xl shadow-slate-200/60 p-7 sm:p-9 transition-all">
           
-          {/* Page Heading with Merged Icon - Black Theme */}
+          {/* MUI-Style Tab Navigation for Roles */}
           <div className="mb-6">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-slate-100 border border-slate-200 rounded-xl text-slate-900">
-                <ShieldCheck className="w-6 h-6 text-slate-900" />
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                {t.loginTitle}
-              </h2>
+            <div className="flex items-center space-x-1 bg-slate-100/90 p-1 rounded-xl border border-slate-200/80 overflow-x-auto no-scrollbar">
+              {roles.map((r) => {
+                const Icon = r.icon;
+                const isSelected = selectedRole === r.id;
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => handleRoleSelect(r.id)}
+                    className={`flex-1 min-w-[70px] sm:min-w-[80px] flex items-center justify-center space-x-1.5 py-2 px-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                      isSelected
+                        ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
+                        : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
+                    }`}
+                  >
+                    <Icon className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-slate-900' : 'text-slate-400'}`} />
+                    <span className="text-[11px] tracking-tight">{r.badge}</span>
+                  </button>
+                );
+              })}
             </div>
+          </div>
+
+          {/* Page Heading for Active Tab Role */}
+          <div className="mb-6 pb-4 border-b border-slate-100 flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="p-2.5 bg-slate-900 text-white rounded-xl shadow-xs">
+                {(() => {
+                  const activeRoleObj = roles.find(r => r.id === selectedRole);
+                  const Icon = activeRoleObj ? activeRoleObj.icon : ShieldCheck;
+                  return <Icon className="w-5 h-5" />;
+                })()}
+              </div>
+              <div>
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 block">
+                  {roles.find(r => r.id === selectedRole)?.badge} ACCESS
+                </span>
+                <h2 className="text-lg font-extrabold text-slate-900 tracking-tight leading-snug">
+                  {roles.find(r => r.id === selectedRole)?.title}
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-mono bg-slate-100 text-slate-700 font-bold px-2.5 py-1 rounded-md border border-slate-200/80">
+              {selectedRole.toUpperCase()}
+            </span>
           </div>
 
           {/* Form Content */}
           <form onSubmit={handleSubmit} className="space-y-5">
             
-            {/* Role Selection */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 block">
-                {t.selectRole}
-              </label>
-              <div className="grid grid-cols-5 gap-1.5">
-                {roles.map((r) => {
-                  const Icon = r.icon;
-                  const isSelected = selectedRole === r.id;
-                  return (
-                    <button
-                      key={r.id}
-                      type="button"
-                      onClick={() => handleRoleSelect(r.id)}
-                      className={`flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all cursor-pointer ${
-                        isSelected
-                          ? 'bg-slate-900 text-white border-slate-900 shadow-xs font-semibold'
-                          : 'bg-slate-50/80 text-slate-600 border-slate-200/80 hover:bg-slate-100 hover:text-slate-900'
-                      }`}
-                      title={r.title}
-                    >
-                      <Icon className="w-4 h-4 mb-1" />
-                      <span className="text-[9px] uppercase tracking-wider font-semibold truncate w-full">
-                        {r.badge}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
             {/* Email / Username Field */}
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-slate-700 block">
@@ -249,12 +255,13 @@ export default function LoginPage({ onLogin, lang, onLangChange, initialRole = '
               </label>
             </div>
 
-            {/* Sign In Submit Button (MUI Template exact Dark Button Style) */}
+            {/* Sign In Submit Button */}
             <button
               type="submit"
               className="w-full bg-[#181C24] hover:bg-[#0B0D12] text-white font-bold text-sm py-3 rounded-xl border border-slate-900 shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center justify-center space-x-2 active:scale-[0.99] mt-2"
             >
               <span>{t.loginButton}</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
           </form>
         </div>
