@@ -28,6 +28,7 @@ export default function ClerkPortal({ currentRole, onVehicleRegistered, lang = '
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
+  const [activeTab, setActiveTab] = useState<'all' | 'form' | 'table'>('all');
   const [pendingVehicles, setPendingVehicles] = useState<Vehicle[]>([]);
   const [isLoadingPending, setIsLoadingPending] = useState(false);
 
@@ -152,14 +153,56 @@ export default function ClerkPortal({ currentRole, onVehicleRegistered, lang = '
 
   return (
     <div className={`space-y-6 font-sans ${lang === 'am' ? 'lang-am' : ''}`}>
-      {/* Module Header Bar */}
-      <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm text-slate-900">
-        <div className="flex items-center space-x-3.5">
-          <div className="p-3 bg-slate-900 rounded-xl text-white shrink-0 shadow-xs">
-            <CloudUpload className="w-5 h-5" />
+      {/* Module Header Bar with MUI Tabs */}
+      <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm text-slate-900 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center space-x-3.5">
+            <div className="p-3 bg-slate-900 rounded-xl text-white shrink-0 shadow-xs">
+              <CloudUpload className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-base font-extrabold tracking-tight text-slate-900">{t.clerkPortalTitle}</h2>
+            </div>
           </div>
-          <div>
-            <h2 className="text-base font-extrabold tracking-tight text-slate-900">{t.clerkPortalTitle}</h2>
+
+          {/* MUI Style Tab Selector */}
+          <div className="flex items-center space-x-1 bg-slate-100/90 p-1 rounded-xl border border-slate-200/80 overflow-x-auto no-scrollbar">
+            <button
+              type="button"
+              onClick={() => setActiveTab('all')}
+              className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center space-x-1.5 ${
+                activeTab === 'all'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
+              }`}
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>{t.viewAll || 'Overview Grid'}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('form')}
+              className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center space-x-1.5 ${
+                activeTab === 'form'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
+              }`}
+            >
+              <Bike className="w-3.5 h-3.5" />
+              <span>{t.vehicleOwnerRegistration}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('table')}
+              className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center space-x-1.5 ${
+                activeTab === 'table'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
+              }`}
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>{t.pendingVehicles} ({pendingVehicles.length})</span>
+            </button>
           </div>
         </div>
       </div>
@@ -184,11 +227,17 @@ export default function ClerkPortal({ currentRole, onVehicleRegistered, lang = '
         </div>
       )}
 
-      {/* Main Registration Grid */}
+      {/* Main Registration Grid with Tab Views */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Registration Form */}
-        <div id="registration-form" className="lg:col-span-7 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm text-slate-900">
+        {(activeTab === 'all' || activeTab === 'form') && (
+          <div
+            id="registration-form"
+            className={`${
+              activeTab === 'form' ? 'lg:col-span-12 max-w-3xl mx-auto w-full' : 'lg:col-span-7'
+            } bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm text-slate-900`}
+          >
           <h3 className="text-sm font-extrabold text-slate-900 tracking-tight mb-5 pb-3 border-b border-slate-200/80 flex items-center justify-between">
             <span className="flex items-center space-x-2">
               <Bike className="w-4 h-4 text-slate-700" />
@@ -379,9 +428,16 @@ export default function ClerkPortal({ currentRole, onVehicleRegistered, lang = '
 
           </form>
         </div>
+        )}
 
         {/* Pending Vehicles Queue */}
-        <div id="pending-queue" className="lg:col-span-5 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm text-slate-900 flex flex-col">
+        {(activeTab === 'all' || activeTab === 'table') && (
+          <div
+            id="pending-queue"
+            className={`${
+              activeTab === 'table' ? 'lg:col-span-12' : 'lg:col-span-5'
+            } bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm text-slate-900 flex flex-col`}
+          >
           <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-200/80">
             <h3 className="text-sm font-extrabold text-slate-900 tracking-tight flex items-center space-x-2">
               <span>{t.pendingApprovals}</span>
@@ -439,6 +495,7 @@ export default function ClerkPortal({ currentRole, onVehicleRegistered, lang = '
             </div>
           )}
         </div>
+        )}
 
       </div>
     </div>

@@ -21,6 +21,7 @@ interface ManifestItem {
 export default function VendorPortal({ currentRole, lang = 'en' }: VendorPortalProps) {
   const t = translations[lang];
 
+  const [activeTab, setActiveTab] = useState<'all' | 'batches' | 'manifest'>('all');
   const [batches, setBatches] = useState<PrintBatch[]>([]);
   const [selectedBatchId, setSelectedBatchId] = useState<string | null>(null);
   const [manifestItems, setManifestItems] = useState<ManifestItem[]>([]);
@@ -120,14 +121,56 @@ export default function VendorPortal({ currentRole, lang = 'en' }: VendorPortalP
 
   return (
     <div className={`space-y-6 font-sans ${lang === 'am' ? 'lang-am' : ''}`}>
-      {/* Module Header Bar */}
-      <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm text-slate-900">
-        <div className="flex items-center space-x-3.5">
-          <div className="p-3 bg-slate-900 rounded-xl text-white shrink-0 shadow-xs">
-            <Printer className="w-5 h-5" />
+      {/* Module Header Bar with MUI Tabs */}
+      <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm text-slate-900 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center space-x-3.5">
+            <div className="p-3 bg-slate-900 rounded-xl text-white shrink-0 shadow-xs">
+              <Printer className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-base font-extrabold tracking-tight text-slate-900">{t.vendorTitle}</h2>
+            </div>
           </div>
-          <div>
-            <h2 className="text-base font-extrabold tracking-tight text-slate-900">{t.vendorTitle}</h2>
+
+          {/* MUI Style Tab Navigation Bar */}
+          <div className="flex items-center space-x-1 bg-slate-100/90 p-1 rounded-xl border border-slate-200/80 overflow-x-auto no-scrollbar">
+            <button
+              type="button"
+              onClick={() => setActiveTab('all')}
+              className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center space-x-1.5 ${
+                activeTab === 'all'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
+              }`}
+            >
+              <Printer className="w-3.5 h-3.5" />
+              <span>{t.viewAll || 'Overview Grid'}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('batches')}
+              className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center space-x-1.5 ${
+                activeTab === 'batches'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
+              }`}
+            >
+              <PackageCheck className="w-3.5 h-3.5" />
+              <span>{t.assignedBatches} ({batches.length})</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('manifest')}
+              className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center space-x-1.5 ${
+                activeTab === 'manifest'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-extrabold'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
+              }`}
+            >
+              <QrCode className="w-3.5 h-3.5" />
+              <span>{t.sanitizedManifest}</span>
+            </button>
           </div>
         </div>
       </div>
@@ -143,7 +186,13 @@ export default function VendorPortal({ currentRole, lang = 'en' }: VendorPortalP
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Batches Queue */}
-        <div id="vendor-batches" className="lg:col-span-5 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm text-slate-900 space-y-4">
+        {(activeTab === 'all' || activeTab === 'batches') && (
+          <div
+            id="vendor-batches"
+            className={`${
+              activeTab === 'batches' ? 'lg:col-span-12' : 'lg:col-span-5'
+            } bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm text-slate-900 space-y-4`}
+          >
           <div className="flex items-center justify-between pb-3 border-b border-slate-200/80">
             <h3 className="text-sm font-extrabold text-slate-900 tracking-tight flex items-center space-x-2">
               <PackageCheck className="w-4 h-4 text-slate-700" />
@@ -217,9 +266,16 @@ export default function VendorPortal({ currentRole, lang = 'en' }: VendorPortalP
             </div>
           )}
         </div>
+        )}
 
         {/* Manifest & Printable Sticker Layout Preview */}
-        <div id="vendor-preview" className="lg:col-span-7 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm text-slate-900 flex flex-col">
+        {(activeTab === 'all' || activeTab === 'manifest') && (
+          <div
+            id="vendor-preview"
+            className={`${
+              activeTab === 'manifest' ? 'lg:col-span-12' : 'lg:col-span-7'
+            } bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm text-slate-900 flex flex-col`}
+          >
           <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-200/80">
             <h3 className="text-sm font-extrabold text-slate-900 tracking-tight flex items-center space-x-2">
               <QrCode className="w-4 h-4 text-slate-700" />
@@ -268,6 +324,7 @@ export default function VendorPortal({ currentRole, lang = 'en' }: VendorPortalP
             </div>
           )}
         </div>
+        )}
 
       </div>
     </div>

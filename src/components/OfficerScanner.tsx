@@ -12,6 +12,7 @@ interface OfficerScannerProps {
 export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScannerProps) {
   const t = translations[lang];
 
+  const [activeTab, setActiveTab] = useState<'camera' | 'manual' | 'sim' | 'all'>('camera');
   const [scanResult, setScanResult] = useState<EnforcementVerifyResponse | null>(null);
   const [isVerifying, setIsVerifying] = useState(false);
   const [manualInput, setManualInput] = useState('');
@@ -212,13 +213,68 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
       </div>
 
       {/* Geolocation Tag */}
-      <div className="flex items-center justify-between mb-5 text-[11px] font-mono opacity-90 font-semibold">
+      <div className="flex items-center justify-between mb-4 text-[11px] font-mono opacity-90 font-semibold">
         <span className="flex items-center space-x-1.5">
           <MapPin className="w-3.5 h-3.5 shrink-0" />
           <span>GPS: {geoCoords ? `${geoCoords.lat.toFixed(4)}, ${geoCoords.lng.toFixed(4)}` : t.gpsLocating}</span>
         </span>
         <span className="font-bold uppercase tracking-wider">{t.badgeId}</span>
       </div>
+
+      {/* MUI Style Tab Navigation Bar */}
+      {!scanResult && (
+        <div className="mb-6 flex items-center justify-center">
+          <div className="inline-flex items-center space-x-1 bg-black/10 p-1 rounded-xl border border-current/20 overflow-x-auto max-w-full no-scrollbar">
+            <button
+              type="button"
+              onClick={() => setActiveTab('camera')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 ${
+                activeTab === 'camera'
+                  ? 'bg-white text-slate-900 shadow-xs font-extrabold'
+                  : 'text-current opacity-80 hover:opacity-100 hover:bg-black/10'
+              }`}
+            >
+              <Camera className="w-3.5 h-3.5" />
+              <span>{t.cameraScanner}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('manual')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 ${
+                activeTab === 'manual'
+                  ? 'bg-white text-slate-900 shadow-xs font-extrabold'
+                  : 'text-current opacity-80 hover:opacity-100 hover:bg-black/10'
+              }`}
+            >
+              <Shield className="w-3.5 h-3.5" />
+              <span>{t.enterUuidManually}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('sim')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 ${
+                activeTab === 'sim'
+                  ? 'bg-white text-slate-900 shadow-xs font-extrabold'
+                  : 'text-current opacity-80 hover:opacity-100 hover:bg-black/10'
+              }`}
+            >
+              <AlertTriangle className="w-3.5 h-3.5" />
+              <span>{t.quickFieldSim}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('all')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 ${
+                activeTab === 'all'
+                  ? 'bg-white text-slate-900 shadow-xs font-extrabold'
+                  : 'text-current opacity-80 hover:opacity-100 hover:bg-black/10'
+              }`}
+            >
+              <span>{t.viewAll || 'All Modes'}</span>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Active Scan Result Chroma Layout */}
       {scanResult ? (
@@ -295,88 +351,94 @@ export default function OfficerScanner({ currentRole, lang = 'en' }: OfficerScan
         <div className="max-w-xl mx-auto space-y-4 py-2">
           
           {/* Camera Scanner Container */}
-          <div id="officer-camera" className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-6 text-center space-y-3 shadow-2xs">
-            <h3 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center justify-center space-x-2">
-              <Camera className="w-5 h-5 text-slate-800" />
-              <span>{t.cameraScanner}</span>
-            </h3>
+          {(activeTab === 'all' || activeTab === 'camera') && (
+            <div id="officer-camera" className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-6 text-center space-y-3 shadow-2xs">
+              <h3 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center justify-center space-x-2">
+                <Camera className="w-5 h-5 text-slate-800" />
+                <span>{t.cameraScanner}</span>
+              </h3>
 
-            {scannerActive ? (
-              <div className="space-y-3">
-                <div id="qr-reader-container" className="overflow-hidden rounded-xl bg-black border border-slate-200 max-w-sm mx-auto shadow-xs" />
+              {scannerActive ? (
+                <div className="space-y-3">
+                  <div id="qr-reader-container" className="overflow-hidden rounded-xl bg-black border border-slate-200 max-w-sm mx-auto shadow-xs" />
+                  <button
+                    onClick={() => setScannerActive(false)}
+                    className="text-xs text-rose-600 font-bold hover:underline cursor-pointer"
+                  >
+                    {t.stopCamera}
+                  </button>
+                </div>
+              ) : (
                 <button
-                  onClick={() => setScannerActive(false)}
-                  className="text-xs text-rose-600 font-bold hover:underline cursor-pointer"
+                  onClick={() => setScannerActive(true)}
+                  className="bg-[#181C24] hover:bg-[#0B0D12] text-white font-bold tracking-tight py-2.5 px-6 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 mx-auto text-xs sm:text-sm cursor-pointer border border-slate-900 active:scale-[0.98]"
                 >
-                  {t.stopCamera}
+                  <Camera className="w-4 h-4" />
+                  <span>{t.activateCamera}</span>
                 </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => setScannerActive(true)}
-                className="bg-[#181C24] hover:bg-[#0B0D12] text-white font-bold tracking-tight py-2.5 px-6 rounded-xl shadow-sm transition flex items-center justify-center space-x-2 mx-auto text-xs sm:text-sm cursor-pointer border border-slate-900 active:scale-[0.98]"
-              >
-                <Camera className="w-4 h-4" />
-                <span>{t.activateCamera}</span>
-              </button>
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           {/* Manual Token Lookup Input */}
-          <div id="officer-manual" className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-6 space-y-2.5 shadow-2xs">
-            <label className="block text-xs font-semibold text-slate-700">
-              {t.enterUuidManually}
-            </label>
-            <div className="flex space-x-2">
-              <input
-                type="text"
-                placeholder="Paste Permit UUID or scanned verification URL"
-                value={manualInput}
-                onChange={(e) => setManualInput(e.target.value)}
-                className="flex-1 bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 placeholder-slate-400 font-mono focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/15 transition-all shadow-2xs"
-              />
-              <button
-                onClick={() => processScannedUrl(manualInput)}
-                disabled={!manualInput || isVerifying}
-                className="bg-[#181C24] hover:bg-[#0B0D12] text-white text-xs font-bold tracking-tight px-4 py-2.5 rounded-xl shadow-sm transition disabled:opacity-50 cursor-pointer border border-slate-900 active:scale-[0.98]"
-              >
-                {isVerifying ? t.checking : t.checkVerify}
-              </button>
+          {(activeTab === 'all' || activeTab === 'manual') && (
+            <div id="officer-manual" className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-6 space-y-2.5 shadow-2xs">
+              <label className="block text-xs font-semibold text-slate-700">
+                {t.enterUuidManually}
+              </label>
+              <div className="flex space-x-2">
+                <input
+                  type="text"
+                  placeholder="Paste Permit UUID or scanned verification URL"
+                  value={manualInput}
+                  onChange={(e) => setManualInput(e.target.value)}
+                  className="flex-1 bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 placeholder-slate-400 font-mono focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/15 transition-all shadow-2xs"
+                />
+                <button
+                  onClick={() => processScannedUrl(manualInput)}
+                  disabled={!manualInput || isVerifying}
+                  className="bg-[#181C24] hover:bg-[#0B0D12] text-white text-xs font-bold tracking-tight px-4 py-2.5 rounded-xl shadow-sm transition disabled:opacity-50 cursor-pointer border border-slate-900 active:scale-[0.98]"
+                >
+                  {isVerifying ? t.checking : t.checkVerify}
+                </button>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Simulation Triggers for Instant Field Testing */}
-          <div id="officer-field-test" className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-6 space-y-3 shadow-2xs">
-            <span className="text-xs font-bold text-slate-700 block text-center">
-              {t.quickFieldSim}
-            </span>
+          {(activeTab === 'all' || activeTab === 'sim') && (
+            <div id="officer-field-test" className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-6 space-y-3 shadow-2xs">
+              <span className="text-xs font-bold text-slate-700 block text-center">
+                {t.quickFieldSim}
+              </span>
 
-            <div className="grid grid-cols-3 gap-3">
-              <button
-                onClick={() => triggerSimulatedScan('valid')}
-                className="bg-white hover:bg-emerald-50 border border-emerald-200 text-emerald-900 py-3 px-2 rounded-xl text-xs font-bold transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-[0.98]"
-              >
-                <CheckCircle className="w-4 h-4 text-emerald-600" />
-                <span>Valid (Clear)</span>
-              </button>
+              <div className="grid grid-cols-3 gap-3">
+                <button
+                  onClick={() => triggerSimulatedScan('valid')}
+                  className="bg-white hover:bg-emerald-50 border border-emerald-200 text-emerald-900 py-3 px-2 rounded-xl text-xs font-bold transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-[0.98]"
+                >
+                  <CheckCircle className="w-4 h-4 text-emerald-600" />
+                  <span>Valid (Clear)</span>
+                </button>
 
-              <button
-                onClick={() => triggerSimulatedScan('expired')}
-                className="bg-white hover:bg-amber-50 border border-amber-200 text-amber-900 py-3 px-2 rounded-xl text-xs font-bold transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-[0.98]"
-              >
-                <AlertTriangle className="w-4 h-4 text-amber-600" />
-                <span>Expired</span>
-              </button>
+                <button
+                  onClick={() => triggerSimulatedScan('expired')}
+                  className="bg-white hover:bg-amber-50 border border-amber-200 text-amber-900 py-3 px-2 rounded-xl text-xs font-bold transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-[0.98]"
+                >
+                  <AlertTriangle className="w-4 h-4 text-amber-600" />
+                  <span>Expired</span>
+                </button>
 
-              <button
-                onClick={() => triggerSimulatedScan('fraud')}
-                className="bg-white hover:bg-rose-50 border border-rose-200 text-rose-900 py-3 px-2 rounded-xl text-xs font-bold transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-[0.98]"
-              >
-                <ShieldAlert className="w-4 h-4 text-rose-600" />
-                <span>Fraud Alert</span>
-              </button>
+                <button
+                  onClick={() => triggerSimulatedScan('fraud')}
+                  className="bg-white hover:bg-rose-50 border border-rose-200 text-rose-900 py-3 px-2 rounded-xl text-xs font-bold transition flex flex-col items-center justify-center space-y-1 text-center cursor-pointer shadow-2xs active:scale-[0.98]"
+                >
+                  <ShieldAlert className="w-4 h-4 text-rose-600" />
+                  <span>Fraud Alert</span>
+                </button>
+              </div>
             </div>
-          </div>
+          )}
 
         </div>
       )}

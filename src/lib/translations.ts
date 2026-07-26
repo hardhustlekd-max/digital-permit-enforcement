@@ -14,6 +14,8 @@ export const translations = {
     activeView: 'Active Portal:',
     languageName: 'English',
     languageCode: 'EN',
+    viewAll: 'Overview Grid',
+    pendingVehicles: 'Pending Queue',
 
     // Role Names
     clerkRole: 'Vehicle Registration Clerk',
@@ -162,6 +164,8 @@ export const translations = {
     activeView: 'የነቃ ፖርታል:',
     languageName: 'አማርኛ',
     languageCode: 'አማ',
+    viewAll: 'አጠቃላይ እይታ',
+    pendingVehicles: 'የሚጠበቁ መዝገቦች',
 
     // Role Names
     clerkRole: 'የተሽከርካሪ መመዝገቢያ ፀሐፊ',

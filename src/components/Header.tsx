@@ -108,8 +108,8 @@ export default function Header({ activeInterface, onInterfaceChange, onSeedData,
             </div>
           </div>
 
-          {/* Header Role Navigation Tabs for Desktop */}
-          <nav className="hidden lg:flex items-center space-x-1 h-full py-2">
+          {/* Header Role Navigation Tabs for Desktop - MUI Styled */}
+          <nav className="hidden lg:flex items-center space-x-1 bg-slate-900/80 p-1 rounded-xl border border-slate-800">
             {interfaces.map((item) => {
               const Icon = item.icon;
               const isActive = activeInterface === item.id;
@@ -117,13 +117,13 @@ export default function Header({ activeInterface, onInterfaceChange, onSeedData,
                 <button
                   key={item.id}
                   onClick={() => onInterfaceChange(item.id)}
-                  className={`px-3 py-1.5 text-xs font-semibold tracking-tight rounded-xl transition-all cursor-pointer flex items-center space-x-2 ${
+                  className={`px-3 py-1.5 text-xs font-semibold tracking-tight rounded-lg transition-all cursor-pointer flex items-center space-x-2 ${
                     isActive
-                      ? 'bg-white text-slate-900 shadow-sm'
+                      ? 'bg-white text-slate-900 shadow-sm font-extrabold border border-slate-200/80'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
                   }`}
                 >
-                  <Icon className="w-4 h-4 shrink-0" />
+                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-slate-900' : 'text-slate-400'}`} />
                   <span>{item.label}</span>
                 </button>
               );
@@ -284,6 +284,30 @@ export default function Header({ activeInterface, onInterfaceChange, onSeedData,
                 </div>
               )}
             </div>
+          </div>
+        </div>
+
+        {/* Mobile Horizontal MUI Scrollable Navigation Tab Bar */}
+        <div className="lg:hidden border-t border-slate-800/80 py-2 overflow-x-auto no-scrollbar">
+          <div className="flex items-center space-x-1 min-w-max px-0.5">
+            {interfaces.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeInterface === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => onInterfaceChange(item.id)}
+                  className={`px-3 py-1.5 text-xs font-semibold tracking-tight rounded-lg transition-all cursor-pointer flex items-center space-x-1.5 whitespace-nowrap ${
+                    isActive
+                      ? 'bg-white text-slate-900 shadow-sm font-extrabold'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                  }`}
+                >
+                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-slate-900' : 'text-slate-400'}`} />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
